@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E711ECC9194B563E00B3687A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E711ECC8194B563E00B3687A /* UIImage+ImageEffects.m */; };
 		E75A297B1947654B003E3AE8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297A1947654B003E3AE8 /* Foundation.framework */; };
 		E75A297D1947654B003E3AE8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297C1947654B003E3AE8 /* CoreGraphics.framework */; };
 		E75A297F1947654B003E3AE8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297E1947654B003E3AE8 /* UIKit.framework */; };
@@ -19,7 +20,6 @@
 		E75A29961947654C003E3AE8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297E1947654B003E3AE8 /* UIKit.framework */; };
 		E75A299E1947654C003E3AE8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E75A299C1947654C003E3AE8 /* InfoPlist.strings */; };
 		E75A29A01947654C003E3AE8 /* Expandable_Header_ViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E75A299F1947654C003E3AE8 /* Expandable_Header_ViewTests.m */; };
-		E77AFA46194A4B4000606ACE /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E77AFA45194A4B4000606ACE /* UIImage+ImageEffects.m */; };
 		E77AFA4B194A546900606ACE /* MEExpandableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E77AFA4A194A546900606ACE /* MEExpandableHeaderView.m */; };
 		E77AFA4F194A55A600606ACE /* MEDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E77AFA4D194A55A600606ACE /* MEDemoViewController.m */; };
 		E77AFA50194A55A600606ACE /* MEDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E77AFA4E194A55A600606ACE /* MEDemoViewController.xib */; };
@@ -36,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E711ECC7194B563E00B3687A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		E711ECC8194B563E00B3687A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		E75A29771947654B003E3AE8 /* Expandable Header View.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Expandable Header View.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75A297A1947654B003E3AE8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E75A297C1947654B003E3AE8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -52,8 +54,6 @@
 		E75A299B1947654C003E3AE8 /* Expandable Header ViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Expandable Header ViewTests-Info.plist"; sourceTree = "<group>"; };
 		E75A299D1947654C003E3AE8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E75A299F1947654C003E3AE8 /* Expandable_Header_ViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Expandable_Header_ViewTests.m; sourceTree = "<group>"; };
-		E77AFA44194A4B4000606ACE /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		E77AFA45194A4B4000606ACE /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		E77AFA49194A546900606ACE /* MEExpandableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEExpandableHeaderView.h; sourceTree = "<group>"; };
 		E77AFA4A194A546900606ACE /* MEExpandableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEExpandableHeaderView.m; sourceTree = "<group>"; };
 		E77AFA4C194A55A600606ACE /* MEDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDemoViewController.h; sourceTree = "<group>"; };
@@ -85,6 +85,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E711ECC6194B563E00B3687A /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				E711ECC7194B563E00B3687A /* UIImage+ImageEffects.h */,
+				E711ECC8194B563E00B3687A /* UIImage+ImageEffects.m */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
 		E75A296E1947654B003E3AE8 = {
 			isa = PBXGroup;
 			children = (
@@ -122,7 +131,6 @@
 				E75A298A1947654C003E3AE8 /* MEAppDelegate.m */,
 				E77AFA47194A545000606ACE /* Demo */,
 				E77AFA48194A545000606ACE /* MEExpandableHeaderView */,
-				E77AFA43194A4B4000606ACE /* ThirdParty */,
 				E75A298C1947654C003E3AE8 /* Images.xcassets */,
 				E75A29811947654C003E3AE8 /* Supporting Files */,
 			);
@@ -158,15 +166,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		E77AFA43194A4B4000606ACE /* ThirdParty */ = {
-			isa = PBXGroup;
-			children = (
-				E77AFA44194A4B4000606ACE /* UIImage+ImageEffects.h */,
-				E77AFA45194A4B4000606ACE /* UIImage+ImageEffects.m */,
-			);
-			path = ThirdParty;
-			sourceTree = "<group>";
-		};
 		E77AFA47194A545000606ACE /* Demo */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +179,7 @@
 		E77AFA48194A545000606ACE /* MEExpandableHeaderView */ = {
 			isa = PBXGroup;
 			children = (
+				E711ECC6194B563E00B3687A /* ThirdParty */,
 				E77AFA49194A546900606ACE /* MEExpandableHeaderView.h */,
 				E77AFA4A194A546900606ACE /* MEExpandableHeaderView.m */,
 			);
@@ -283,8 +283,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E77AFA46194A4B4000606ACE /* UIImage+ImageEffects.m in Sources */,
 				E77AFA4B194A546900606ACE /* MEExpandableHeaderView.m in Sources */,
+				E711ECC9194B563E00B3687A /* UIImage+ImageEffects.m in Sources */,
 				E75A298B1947654C003E3AE8 /* MEAppDelegate.m in Sources */,
 				E75A29871947654C003E3AE8 /* main.m in Sources */,
 				E77AFA4F194A55A600606ACE /* MEDemoViewController.m in Sources */,
