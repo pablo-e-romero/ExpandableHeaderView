@@ -11,25 +11,14 @@
 
 @interface MEDemoViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic, strong) IBOutlet UITableView *tableView;
-@property(nonatomic, strong) MEExpandableHeaderView *headerView;
+@property(nonatomic, weak) IBOutlet MEExpandableHeaderView *headerView;
+@property(nonatomic, weak) IBOutlet UITableView *tableView;
+
 @property(nonatomic, retain) NSArray *elementsList;
 
 @end
 
 @implementation MEDemoViewController
-
-#pragma mark - NSObject lifecycle
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        self.title = @"Expandable Header View";
-    }
-    return self;
-}
 
 #pragma mark - View controller lifecycle
 
@@ -37,40 +26,46 @@
 {
     [super viewDidLoad];
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
     [self setupElements];
     [self setupHeaderView];
-    
 }
 
 #pragma mark - Setup
 
 - (void)setupHeaderView
 {
-    CGSize headerViewSize = CGSizeMake(320, 200);
-    UIImage *backgroundImage = [UIImage imageNamed:@"beach"];
-    NSArray *pages = @[[self createPageViewWithText:@"First page"],
-                       [self createPageViewWithText:@"Second page"],
-                       [self createPageViewWithText:@"Third page"],
-                       [self createPageViewWithText:@"Fourth page"]];
-    MEExpandableHeaderView *headerView = [[MEExpandableHeaderView alloc] initWithSize:headerViewSize
-                                                                      backgroundImage:backgroundImage
-                                                                         contentPages:pages];
-    self.tableView.tableHeaderView = headerView;
-    self.headerView = headerView;
+    assert([self.headerView isKindOfClass:[MEExpandableHeaderView class]]);
+    assert([self.tableView isKindOfClass:[UITableView class]]);
+    
+    self.headerView.backgroundImage = [UIImage imageNamed:@"beach"];
+    
+    NSArray *pages = @[[[self class] createPageViewWithText:@"First page"],
+                       [[self class] createPageViewWithText:@"Second page"],
+                       [[self class] createPageViewWithText:@"Third page"],
+                       [[self class] createPageViewWithText:@"Fourth page"]];
+    
+    self.headerView.pages = pages;
+    
+    self.tableView.tableHeaderView = self.headerView;
 }
 
 - (void)setupElements
 {
-    self.elementsList = @[@"Row 1", @"Row 2", @"Row 3", @"Row 4", @"Row 5", @"Row 6", @"Row 7", @"Row 8", @"Row 9", @"Row 10"];
+    static NSUInteger const kElementsCount = 10;
+    
+    NSMutableArray *elementsList = [NSMutableArray arrayWithCapacity:kElementsCount];
+    
+    for (NSUInteger index = 1; index <= kElementsCount; index++)
+    {
+        [elementsList addObject:[NSString stringWithFormat:@"Row %lu", (unsigned long)index]];
+    }
+    
+    self.elementsList = [NSArray arrayWithArray:elementsList];
 }
-
 
 #pragma mark - Content
 
-- (UIView*)createPageViewWithText:(NSString*)text
++ (UIView*)createPageViewWithText:(NSString*)text
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 260, 44)];
     
@@ -94,27 +89,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (NSInteger)[self.elementsList count];
+    return [self.elementsList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    NSString *cellIdentifier = @"TableViewCellIdentifier";
+    NSString *cellIdentifier = @"defaultCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
     
     NSString *rowText = [self.elementsList objectAtIndex:indexPath.row];
     
     cell.textLabel.text = rowText;
     
     return cell;
-
 }
 
 #pragma mark - Table view delegate
@@ -122,11 +110,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 44.0f;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E711ECC9194B563E00B3687A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E711ECC8194B563E00B3687A /* UIImage+ImageEffects.m */; };
+		E7349C691D4A5C02008C1274 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7349C681D4A5C02008C1274 /* Storyboard.storyboard */; };
+		E7349C6E1D4A9184008C1274 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7349C6D1D4A9184008C1274 /* Launch Screen.storyboard */; };
 		E75A297B1947654B003E3AE8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297A1947654B003E3AE8 /* Foundation.framework */; };
 		E75A297D1947654B003E3AE8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297C1947654B003E3AE8 /* CoreGraphics.framework */; };
 		E75A297F1947654B003E3AE8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A297E1947654B003E3AE8 /* UIKit.framework */; };
@@ -22,7 +24,6 @@
 		E75A29A01947654C003E3AE8 /* Expandable_Header_ViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E75A299F1947654C003E3AE8 /* Expandable_Header_ViewTests.m */; };
 		E77AFA4B194A546900606ACE /* MEExpandableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E77AFA4A194A546900606ACE /* MEExpandableHeaderView.m */; };
 		E77AFA4F194A55A600606ACE /* MEDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E77AFA4D194A55A600606ACE /* MEDemoViewController.m */; };
-		E77AFA50194A55A600606ACE /* MEDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E77AFA4E194A55A600606ACE /* MEDemoViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,8 @@
 /* Begin PBXFileReference section */
 		E711ECC7194B563E00B3687A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		E711ECC8194B563E00B3687A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		E7349C681D4A5C02008C1274 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		E7349C6D1D4A9184008C1274 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E75A29771947654B003E3AE8 /* Expandable Header View.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Expandable Header View.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E75A297A1947654B003E3AE8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E75A297C1947654B003E3AE8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -58,7 +61,6 @@
 		E77AFA4A194A546900606ACE /* MEExpandableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEExpandableHeaderView.m; sourceTree = "<group>"; };
 		E77AFA4C194A55A600606ACE /* MEDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDemoViewController.h; sourceTree = "<group>"; };
 		E77AFA4D194A55A600606ACE /* MEDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDemoViewController.m; sourceTree = "<group>"; };
-		E77AFA4E194A55A600606ACE /* MEDemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEDemoViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +173,8 @@
 			children = (
 				E77AFA4C194A55A600606ACE /* MEDemoViewController.h */,
 				E77AFA4D194A55A600606ACE /* MEDemoViewController.m */,
-				E77AFA4E194A55A600606ACE /* MEDemoViewController.xib */,
+				E7349C681D4A5C02008C1274 /* Storyboard.storyboard */,
+				E7349C6D1D4A9184008C1274 /* Launch Screen.storyboard */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -231,7 +234,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ME;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Microeditionbiz;
 				TargetAttributes = {
 					E75A29911947654C003E3AE8 = {
@@ -263,8 +266,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E75A29851947654C003E3AE8 /* InfoPlist.strings in Resources */,
+				E7349C691D4A5C02008C1274 /* Storyboard.storyboard in Resources */,
+				E7349C6E1D4A9184008C1274 /* Launch Screen.storyboard in Resources */,
 				E75A298D1947654C003E3AE8 /* Images.xcassets in Resources */,
-				E77AFA50194A55A600606ACE /* MEDemoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +351,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -402,11 +407,11 @@
 		E75A29A41947654C003E3AE8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Expandable Header View/Expandable Header View-Prefix.pch";
 				INFOPLIST_FILE = "Expandable Header View/Expandable Header View-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.microedition.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -415,11 +420,11 @@
 		E75A29A51947654C003E3AE8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Expandable Header View/Expandable Header View-Prefix.pch";
 				INFOPLIST_FILE = "Expandable Header View/Expandable Header View-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.microedition.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -441,6 +446,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Expandable Header ViewTests/Expandable Header ViewTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.microedition.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -459,6 +465,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Expandable Header View/Expandable Header View-Prefix.pch";
 				INFOPLIST_FILE = "Expandable Header ViewTests/Expandable Header ViewTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.microedition.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

@@ -12,7 +12,7 @@
 
 @interface MEExpandableHeaderView()<UIScrollViewDelegate>
 
-@property(nonatomic, strong) UIImage *originalImage;
+@property(nonatomic, strong) UIImage *originalBackgroundImage;
 @property(nonatomic, assign) CGPoint previousContentOffset;
 @property(nonatomic, assign) CGFloat originalHeight;
 
@@ -24,120 +24,201 @@
 
 @implementation MEExpandableHeaderView
 
-#pragma mark - NSObject Lifecycle
+#pragma mark - Init
 
-- (id)initWithSize:(CGSize)size
-   backgroundImage:(UIImage*)image
-      contentPages:(NSArray*)pages
+- (void)commonInit
 {
-    assert(image != nil && [image isKindOfClass:[UIImage class]]);
-    assert(pages == nil || [pages isKindOfClass:[NSArray class]]);
-    
-    self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    _originalHeight = self.frame.size.height;
+    _previousContentOffset = CGPointZero;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
     if (self)
     {
-        _originalHeight = size.height;
-        _originalImage = image;
-        _previousContentOffset = CGPointZero;
-        
-        [self setupBackgroundView];
-        [self setupPages:pages];
-        [self setupPageControl:[pages count]];
+        [self commonInit];
     }
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self commonInit];
+}
+
+#pragma mark - Resize
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [self resizePages];
+}
+
 #pragma mark - Setup
 
-- (void)setupBackgroundView
+- (void)setBackgroundImage:(UIImage*)backgroundImage
 {
-    assert(!self.backgroundImageView);
+    assert(backgroundImage == nil || [backgroundImage isKindOfClass:[UIImage class]]);
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:self.originalImage];
-    imageView.frame = self.bounds;
-    imageView.contentMode = UIViewContentModeCenter;
+    _backgroundImage = backgroundImage;
+    _originalBackgroundImage = backgroundImage;
     
-    [self addSubview:imageView];
-    self.backgroundImageView = imageView;
+    if (backgroundImage != nil &&
+        self.backgroundImageView == nil)
+    {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        imageView.clipsToBounds = YES;
+        
+        imageView.autoresizingMask =
+        UIViewAutoresizingFlexibleHeight |
+        UIViewAutoresizingFlexibleWidth;
+        
+        [self insertSubview:imageView atIndex:0];
+        
+        self.backgroundImageView = imageView;
+    }
+    
+    self.backgroundImageView.image = backgroundImage;
+}
+
+- (void)setPages:(NSArray*)pages
+{
+    assert([pages isKindOfClass:[NSArray class]] && [pages count] > 0);
+    
+    _pages = pages;
+    
+    if (self.pagesScrollView == nil)
+    {
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        
+        [scrollView setDelegate:self];
+        [scrollView setPagingEnabled:YES];
+        [scrollView setShowsHorizontalScrollIndicator:NO];
+        [scrollView setShowsVerticalScrollIndicator:NO];
+        
+        scrollView.autoresizingMask =
+        UIViewAutoresizingFlexibleHeight |
+        UIViewAutoresizingFlexibleWidth;
+        
+        [self addSubview:scrollView];
+        self.pagesScrollView = scrollView;
+    }
+    
+    [self setupPages:pages];
+    [self setupPageControl:[pages count]];
 }
 
 - (void)setupPages:(NSArray*)pages
 {
-    assert(!self.pagesScrollView);
+    assert([self.pagesScrollView isKindOfClass:[UIScrollView class]]);
     
-    UIScrollView *pagesScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
-  
-    [pagesScrollView setDelegate:self];
-    [pagesScrollView setPagingEnabled:YES];
-    [pagesScrollView setShowsHorizontalScrollIndicator:NO];
-    [pagesScrollView setShowsVerticalScrollIndicator:NO];
-    
-    CGFloat posX = 0.0;
-    
-    for (UIView *page in pages)
+    for (UIView *page in self.pages)
     {
         assert([page isKindOfClass:[UIView class]]);
+        [self.pagesScrollView addSubview:page];
+    }
+    
+    [self resizePages];
+}
+
+- (void)resizePages
+{
+    assert([self.pagesScrollView isKindOfClass:[UIScrollView class]]);
+    
+    CGFloat posX = 0.0;
+    CGPoint center;
+    center.y = self.bounds.size.height / 2.0;
+    
+    for (UIView *page in self.pages)
+    {
+        assert([page isKindOfClass:[UIView class]]);
+        assert(page.superview != nil);
         
-        page.center = CGPointMake(posX + self.bounds.size.width/2.0,
-                                  self.bounds.size.height/2.0);
-        
-        [pagesScrollView addSubview:page];
+        center.x = posX + self.bounds.size.width / 2.0;
+        page.center = center;
         
         posX += self.bounds.size.width;
     }
     
-    [pagesScrollView setContentSize:CGSizeMake(posX, self.bounds.size.height)];
-    
-    [self addSubview:pagesScrollView];
-    self.pagesScrollView = pagesScrollView;
-
+    [self.pagesScrollView setContentSize:CGSizeMake(posX, self.bounds.size.height)];
+    [self scrollToPage:self.pageControl.currentPage
+              animated:NO];
 }
 
 - (void)setupPageControl:(NSUInteger)pagesCount
 {
-    assert(!self.pageControl);
+    assert(pagesCount > 0);
     
     if (pagesCount > 1)
     {
         static CGFloat const kPageControlPadding = 7.0;
         static CGRect const kPageControlDefaultFrame = {0, 0, 20, 20};
         
-        UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:kPageControlDefaultFrame];
+        if (self.pageControl == nil)
+        {
+            UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:kPageControlDefaultFrame];
+            
+            [pageControl addTarget:self
+                            action:@selector(pageControlChanged)
+                  forControlEvents:UIControlEventValueChanged];
         
-        [pageControl addTarget:self
-                        action:@selector(pageControlChanged)
-              forControlEvents:UIControlEventValueChanged];
+            pageControl.autoresizingMask =
+            UIViewAutoresizingFlexibleTopMargin |
+            UIViewAutoresizingFlexibleLeftMargin |
+            UIViewAutoresizingFlexibleRightMargin;
+            
+            UIColor *backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+            [pageControl setBackgroundColor:backgroundColor];
+            
+            CGSize pageControlSize = [pageControl sizeForNumberOfPages:pagesCount];
+            
+            CGRect pageFrame = pageControl.frame;
+            pageFrame.size.width = pageControlSize.width + kPageControlPadding * 2;
+            pageFrame.origin.x = (self.bounds.size.width - pageFrame.size.width) / 2.0;
+            pageFrame.origin.y = self.bounds.size.height - (pageFrame.size.height + kPageControlPadding);
+            
+            pageControl.frame = pageFrame;
         
-        [pageControl setNumberOfPages:pagesCount];
-        [pageControl setCurrentPage:0];
-   
-        UIColor *backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-        [pageControl setBackgroundColor:backgroundColor];
+            pageControl.layer.cornerRadius = pageControl.frame.size.height / 2.0;
+            
+            [self addSubview:pageControl];
+            
+            self.pageControl = pageControl;
+        }
         
-        CGSize pageControlSize = [pageControl sizeForNumberOfPages:pagesCount];
-      
-        pageControl.frame = CGRectMake((self.bounds.size.width-pageControlSize.width)/2.0,
-                                       self.bounds.size.height-(pageControl.frame.size.height+kPageControlPadding),
-                                       pageControlSize.width+kPageControlPadding*2,
-                                       pageControl.frame.size.height);
-        
-        pageControl.layer.cornerRadius = pageControl.frame.size.height/2.0;
-        
-        [self addSubview:pageControl];
-        self.pageControl = pageControl;
+        [self.pageControl setNumberOfPages:pagesCount];
+        [self.pageControl setCurrentPage:0];
+    }
+    else
+    {
+        [self.pageControl removeFromSuperview];
+        self.pageControl = nil;
     }
 }
 
-#pragma mark - Actions
+#pragma mark - Page
 
 - (void)pageControlChanged
 {
+    [self scrollToPage:self.pageControl.currentPage
+              animated:YES];
+}
+
+- (void)scrollToPage:(NSUInteger)pageNumber
+            animated:(BOOL)animated
+{
     assert([self.pagesScrollView isKindOfClass:[UIScrollView class]]);
     
-    CGPoint newOffset = CGPointMake(self.bounds.size.width * self.pageControl.currentPage, 0);
-	[self.pagesScrollView setContentOffset:newOffset
-                                  animated:YES];
-	
+    CGPoint newOffset = CGPointMake(self.bounds.size.width * pageNumber, 0);
+    [self.pagesScrollView setContentOffset:newOffset
+                                  animated:animated];
+    
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -172,17 +253,17 @@
 {
     if (newOffset.y <= 0)
     {
-        CGAffineTransform translate = CGAffineTransformMakeTranslation(0, newOffset.y/2.0);
+        CGAffineTransform translate = CGAffineTransformMakeTranslation(0, newOffset.y / 2.0);
         
         CGFloat scaleFactor = (self.originalHeight - newOffset.y) / self.originalHeight;
         
         CGAffineTransform translateAndZoom = CGAffineTransformScale(translate, scaleFactor, scaleFactor);
         
-        float radius = -newOffset.y/40.0;
-        self.backgroundImageView.image = [self.originalImage applyBlurWithRadius:radius
-                                                                        tintColor:nil
-                                                            saturationDeltaFactor:1.0
-                                                                        maskImage:nil];
+        float radius = -newOffset.y / 40.0;
+        self.backgroundImageView.image = [self.originalBackgroundImage applyBlurWithRadius:radius
+                                                                                 tintColor:nil
+                                                                     saturationDeltaFactor:1.0
+                                                                                 maskImage:nil];
         self.backgroundImageView.transform = translateAndZoom;
         self.pagesScrollView.transform = translate;
     }

@@ -10,24 +10,14 @@
 
 @interface MEExpandableHeaderView : UIView
 
+@property(nonatomic, strong) UIImage *backgroundImage;
+@property(nonatomic, strong) NSArray *pages;
+
 @property(nonatomic, strong, readonly) UIImageView *backgroundImageView;
 @property(nonatomic, strong, readonly) UIScrollView *pagesScrollView;
 @property(nonatomic, strong, readonly) UIPageControl *pageControl;
 
-/**
- *	@brief		Creates a new instance of MEExpandableHeaderView class.
- *
- *	@param		size				You have to specify the size of the header view.
- *	@param		backgroundImage		Background image. It can't be nil.
- *	@param		contentPages		Array of view that will be used to create the pages. It can be
- *									nil. If the array has more than 1 element, a page control will
- *									be automatically added.
- *
- *	@return		New MEExpandableHeaderView instance.
- */
-- (id)initWithSize:(CGSize)size
-   backgroundImage:(UIImage*)backgroundImage
-      contentPages:(NSArray*)contentPages;
+
 
 /**
  *	@brief		This method is used to get notified when the container table view's offset was
