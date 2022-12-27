@@ -1,4 +1,5 @@
-ExpandableHeaderView
-====================
+## ExpandableHeaderView
 
-It tries to reproduce the behaviour that you can find on Twitter app, profile section, when the user scrolls down that section and the header is expanded and blurred.
+When the user scrolls down, the header section is expanded and blurred.
+
+<img src="https://user-images.githubusercontent.com/569085/209664294-0cda9ac1-bddb-4890-a067-8fb8227d5714.gif" width="320"/>
